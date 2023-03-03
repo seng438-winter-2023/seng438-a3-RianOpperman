@@ -43,7 +43,7 @@ public class RangeTest{
 	// -----------------------------------------------------------
 	// getLength()
 	
-	// 
+	// Tests to check if the correct length is returned
 	@Test
 	public void getLengthTest() {
 		assertEquals("Retrieved length is incorrect", 
@@ -53,7 +53,7 @@ public class RangeTest{
 	// -----------------------------------------------------------
 	// getCentralValue()
 	
-	// 
+	// Test to check if the central value from the range is correct
 	@Test
 	public void getCentralValueTest() {
 		assertEquals("Retrieved central value is incorrect", 
@@ -93,38 +93,46 @@ public class RangeTest{
 		assertFalse(exampleRange.intersects(6, 10));
 	}
 
-	
+	// Tests intersects() when the given range is towards the lower end of the example range
 	@Test
 	public void testIntersectAtLowervSpecifiedRange() {
 		assertTrue(exampleRange.intersects(4, 10));
 	}
+	
+	// Tests intersects() when the given range is above the example range
 	@Test
 	public void testIntersectAboveSpecifiedRange() {
 		assertFalse(exampleRange.intersects(-10, -6));
 	}
 	
+	// Tests intersects() when the given range is towards the upper end of the example range
 	@Test
 	public void testIntersectAtUpperSpecifiedRange() {
 		assertTrue(exampleRange.intersects(-10, -4));
 	}
 	
+	// Tests intersects() when the given range is below the example range
 	@Test
 	public void testIntersectBelowGivenRange() {
 		Range SpecifiedRange = new Range(6,10);
 		assertFalse(exampleRange.intersects(SpecifiedRange));
 	}
 	
+	// Tests intersects() when the given range is towards the lower end of the example range
 	@Test
 	public void testIntersectAtLowervGivenRange() {
 		Range SpecifiedRange = new Range(4,10);
 		assertTrue(exampleRange.intersects(SpecifiedRange));
 	}
+	
+	// Tests intersects() when the given range is above the example range
 	@Test
 	public void testIntersectAboveGivenRange() {
 		Range SpecifiedRange = new Range(-10,-6);
 		assertFalse(exampleRange.intersects(SpecifiedRange));
 	}
 	
+	// Tests intersects() when the given range is towards the upper end of the example range
 	@Test
 	public void testIntersectAtUpperGivenRange() {
 		Range SpecifiedRange = new Range(-10,-4);
@@ -132,6 +140,7 @@ public class RangeTest{
 			
 	}
 	
+	// Tests to check if exception is thrown when sending null range value
 	@Test 
 	public void testIntersectWhenRangeIsNull() throws InvalidParameterException{
 		exception.expect(InvalidParameterException.class);
