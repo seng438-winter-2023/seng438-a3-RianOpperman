@@ -72,7 +72,7 @@ public class RangeTest{
 
 	// Contains() method is tested by sending a value which is above range
 	@Test
-	public void testContainsBelowRange() {
+	public void testContainsAboveRange() {
 		double testValue = 6;
 		assertFalse(exampleRange.contains(testValue));
 	}
@@ -417,6 +417,8 @@ public class RangeTest{
 	@Test
 	public void testExpandRangeNaN(){
 		Range ret = Range.expand(new Range(Double.NaN, Double.NaN), 0.5, 0.5);
+		assertTrue(Double.isNaN(ret.getLowerBound()));
+		assertTrue(Double.isNaN(ret.getUpperBound()));
 	}
 
 	// tests expand when range is valid
@@ -442,11 +444,15 @@ public class RangeTest{
 	@Test
 	public void testExpandNaNLower(){
 		Range ret = Range.expand(exampleRange, Double.NaN, 0.5);
+		assertTrue(Double.isNaN(ret.getLowerBound()));
+		assertTrue(ret.getUpperBound() == 10);
 	}
 
 	@Test
 	public void testExpandNaNUpper(){
 		Range ret = Range.expand(exampleRange, 0.5, Double.NaN);
+		assertTrue(Double.isNaN(ret.getUpperBound()));
+		assertTrue(ret.getLowerBound() == -10);
 	}
 
 	@Test
@@ -458,7 +464,7 @@ public class RangeTest{
 	@Test
 	public void testExpand(){
 		Range ret = Range.expand(exampleRange, 0.5, 0.5);
-		assertEquals(-10, 10);
+		assertEquals(new Range(-10, 10), ret);
 	}
 
 	// -----------------------------------------------------------
@@ -482,11 +488,11 @@ public class RangeTest{
 
 		ret = Range.shift(new Range(Double.NaN, 5), 5);
 		assertTrue(Double.isNaN(ret.getLowerBound()));
-		assertEquals(ret.getUpperBound() == 10);
+		assertTrue(ret.getUpperBound() == 10);
 
 		ret = Range.shift(new Range(-5, Double.NaN), 5);
 		assertTrue(Double.isNaN(ret.getUpperBound()));
-		assertEquals(ret.getLowerBound == 0);
+		assertTrue(ret.getLowerBound() == 0);
 	}
 
 	// tests shift when range is valid and the delta is negative
@@ -530,11 +536,11 @@ public class RangeTest{
 
 		ret = Range.shift(new Range(Double.NaN, 5), 5, true);
 		assertTrue(Double.isNaN(ret.getLowerBound()));
-		assertEquals(ret.getUpperBound() == 10);
+		assertTrue(ret.getUpperBound() == 10);
 
 		ret = Range.shift(new Range(-5, Double.NaN), 5, true);
 		assertTrue(Double.isNaN(ret.getUpperBound()));
-		assertEquals(ret.getLowerBound == 0);
+		assertTrue(ret.getLowerBound() == 0);
 	}
 
 	// tests shift with zero crossing set to true and delta being negative
@@ -571,11 +577,11 @@ public class RangeTest{
 
 		ret = Range.scale(new Range(Double.NaN, 5), 5);
 		assertTrue(Double.isNaN(ret.getLowerBound()));
-		assertEquals(ret.getUpperBound() == 25);
+		assertTrue(ret.getUpperBound() == 25);
 		
 		ret = Range.scale(new Range(-5, Double.NaN), 5);
 		assertTrue(Double.isNaN(ret.getUpperBound()));
-		assertEquals(ret.getLowerBound == -25);
+		assertTrue(ret.getLowerBound() == -25);
 	}
 
 	// tests scale when the factor is less than 0,
