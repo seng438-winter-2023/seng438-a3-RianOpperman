@@ -421,26 +421,28 @@ public class RangeTest{
 		assertTrue(Double.isNaN(ret.getUpperBound()));
 	}
 
-	// tests expand when range is valid
+	// tests expand when range is valid, both lower and upper margin are negative
 	@Test
 	public void testExpandNegLowerNegUpper(){
 		Range ret = Range.expand(exampleRange, -0.25, -0.25);
 		assertEquals(ret, new Range(-2.5, 2.5));
 	}
 
+	// tests expand when range is valid, lower margin is negative and upper margin is positive
 	@Test
 	public void testExpandNegLower(){
 		Range ret = Range.expand(exampleRange, -0.25, 0.5);
 		assertEquals(ret, new Range(-2.5, 10));
 	}
 
+	// tests expand when range is valid, lower margin is positive and upper margin is negative
 	@Test
 	public void testExpandNegUpper(){
 		Range ret = Range.expand(exampleRange, 0.5, -0.25);
 		assertEquals(ret, new Range(-10, 2.5));
 	}
 
-
+	// tests expand when range is valid and lower margin is NaN and upper margin is positive
 	@Test
 	public void testExpandNaNLower(){
 		Range ret = Range.expand(exampleRange, Double.NaN, 0.5);
@@ -448,6 +450,7 @@ public class RangeTest{
 		assertTrue(ret.getUpperBound() == 10);
 	}
 
+	// tests expand when range is valid and lower margin is positive and upper margin is NaN
 	@Test
 	public void testExpandNaNUpper(){
 		Range ret = Range.expand(exampleRange, 0.5, Double.NaN);
@@ -455,12 +458,14 @@ public class RangeTest{
 		assertTrue(ret.getLowerBound() == -10);
 	}
 
+	// tests expand when range is valid and lower margin is smaller than the upper margin
 	@Test
 	public void testExpandLowerGreaterThanUpper(){
 		Range ret = Range.expand(exampleRange, -0.25, -1);
 		assertEquals(ret, new Range(-5, -2.5));
 	}
 	
+	// tests expand when both upper and lower margin is positive and the range is valid
 	@Test
 	public void testExpand(){
 		Range ret = Range.expand(exampleRange, 0.5, 0.5);
